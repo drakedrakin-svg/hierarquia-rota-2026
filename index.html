@@ -2,992 +2,427 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>4º BPCHQ - GATE | Sistema de Hierarquia Policial</title>
+<title>Hierarquia ROTA</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 <style>
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { 
-    font-family: 'Arial', sans-serif; 
-    background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%);
-    color: #f1f1f1; 
-    min-height: 100vh;
-    position: relative;
-    overflow-x: hidden;
+/* --- ESTILO ORIGINAL (NÃO REMOVIDO) --- */
+body { font-family:'Arial',sans-serif; background:#181c23; color:#f1f1f1; margin:0; padding:0; min-height:100vh; }
+header { text-align:center; padding:30px 20px 10px 20px; background:#23273a; border-bottom:4px solid #FFD700; box-shadow:0 4px 16px #0008; }
+header img { height:90px; filter:drop-shadow(0 0 16px #FFD70088); margin-bottom:10px; }
+header h1 { margin:10px 0 0 0; font-size:2.2em; color:#FFD700; letter-spacing:3px; font-family:'Bebas Neue',Arial,sans-serif; text-shadow:0 2px 8px #000,0 0 10px #FFD70055; }
+.container { max-width:900px; margin:30px auto; padding:20px; min-height:400px; }
+.categoria { margin:22px 0; padding:18px; border-radius:12px; box-shadow:0 2px 12px #0006; position:relative; border-left:6px solid transparent; background:#23273a; }
+.categoria h2 { margin:0 0 14px 0; font-size:24px; font-family:'Bebas Neue',Arial,sans-serif; border-bottom:2px solid #FFD70033; letter-spacing:.5px; display:flex; align-items:center; gap:10px; }
+.militar-list { list-style:none; padding:0; margin:0; }
+.militar { padding:8px 16px; margin:6px 0; border-radius:7px; font-size:18px; display:flex; justify-content:space-between; align-items:center; background:rgba(255,255,255,0.04); box-shadow:0 1px 6px #0003 inset; transition:all .3s;}
+.militar.highlight { animation: highlightAnim .7s;}
+@keyframes highlightAnim { 0% { background:#FFD70033; transform:scale(1.02);} 50%{background:#FFD70055;} 100%{background:rgba(255,255,255,0.04); transform:scale(1);} }
+.militar .remover-btn { background:#ff4444; color:#fff; border:none; border-radius:5px; padding:3px 10px; margin-left:10px; cursor:pointer; font-size:.95em; transition:.2s;}
+.militar .remover-btn:hover { background:#ff0000;}
+.Tenente-Coronel { background:linear-gradient(90deg,#FFD700cc,#fffbe6cc); color:#222; border-left-color:#FFD700;}
+.Major { background:linear-gradient(90deg,#C0C0C0cc,#eaeaea99); color:#222; border-left-color:#C0C0C0;}
+.Capitão { background:linear-gradient(90deg,#00008Bcc,#1e3c72cc); color:#fff; border-left-color:#00008B;}
+.Tenente { background:linear-gradient(90deg,#006400cc,#43a047cc); color:#fff; border-left-color:#43a047;}
+.Sargento { background:linear-gradient(90deg,#654321cc,#b8860bcc); color:#fff; border-left-color:#b8860b;}
+.Soldado { background:linear-gradient(90deg,#555555cc,#888888cc); color:#fff; border-left-color:#888888;}
+.Estagiário { background:linear-gradient(90deg,#fff,#eaeaea); color:#222; border-left-color:#bbb;}
+#adminBtn { position:fixed; top:24px; right:32px; z-index:10; background:#23273a; color:#FFD700; border:none; padding:12px 28px; border-radius:8px; font-weight:bold; font-size:18px; cursor:pointer; box-shadow:0 2px 8px #0005; transition:.2s;}
+#adminBtn:hover { background:#FFD700;color:#23273a;}
+#adminModalBg { display:none; position:fixed; top:0; left:0;width:100vw;height:100vh;z-index:100;background:#000a;justify-content:center;align-items:center;}
+#adminModal { background:#23273a;padding:32px 28px;border-radius:16px;min-width:320px;max-width:95vw;box-shadow:0 8px 32px #000a;text-align:center;position:relative;}
+#adminModal h3 { color:#FFD700;font-family:'Bebas Neue',Arial,sans-serif;margin-top:-10px;}
+#adminModal input[type=password], #adminModal input[type=text], #adminModal select { width:80%;padding:9px;margin-bottom:.7em;border-radius:7px;border:none;background:#181c23;color:#FFD700;font-size:17px;border-bottom:2.5px solid #FFD70055;text-align:center;}
+#adminModal button {background:#FFD700;color:#23273a;font-weight:bold;padding:9px 22px;border:none;border-radius:7px;font-size:18px;margin-top:.5em;margin-bottom:.5em;cursor:pointer;}
+#adminModal button:hover{background:#fffbe6;color:#000;}
+#fecharModalBtn { position:absolute;top:-10px;right:-10px;background:#FFD700;color:#23273a;border-radius:50%;width:36px;height:36px;font-size:22px;border:none;font-weight:bold;cursor:pointer;padding-top:.2em;}
+.admin-form-row { display:flex; gap:10px; align-items:center;margin-bottom:.7em;flex-wrap:wrap;}
+@media (max-width:600px){ header h1{font-size:6vw;padding:.8em;} .container{padding:.5em;} #adminBtn{top:.7em;right:.7em;padding:.7em;} #adminModal{padding:.7em;} }
+.fade-in {animation:fadex .7s;}
+@keyframes fadex{from{opacity:.2;transform:translateY(30px);}to{opacity:1;transform:none;}}
+/* --- MELHORIAS VISUAIS E FUNCIONAIS --- */
+::-webkit-scrollbar{width:.7em;background:#232526;}::-webkit-scrollbar-thumb{background:#FFD70044;border-radius:.5em;}
+#removerSugestoes li:hover{background:#FFD70033;} #removerSugestoes li.selected{background:#FFD70099;color:#232526;}
+#mensagem { color:#00ff66;margin-top:.5em;font-weight:bold;}
+/* Separador visual no admin */
+hr.separator{border:none;border-top:1.5px solid #FFD70033;margin-top:.9em;margin-bottom:.9em;}
+/* Tooltip custom */
+.tooltip{position:absolute;background:#232526ee;color:#FFD700;padding:.4em .9em;border-radius:.5em;font-size:.98em;font-family:sans-serif;border-bottom:.5em solid #FFD70055;
+box-shadow:0 2.5px 12px #0008;font-weight:bold;text-align:center;
+z-index:9999;
+pointer-events:none;
+opacity:.95;
+transition:.15s;
 }
-body::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: 
-        linear-gradient(rgba(255, 215, 0, 0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 215, 0, 0.03) 1px, transparent 1px);
-    background-size: 50px 50px;
-    pointer-events: none;
-    z-index: 0;
-}
-header { 
-    text-align: center; 
-    padding: 40px 20px 20px 20px; 
-    background: linear-gradient(180deg, #1a1a1a 0%, #0d0d0d 100%);
-    border-bottom: 4px solid #FFD700;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8);
-    position: relative;
-    z-index: 10;
-}
-header::after {
-    content: '';
-    position: absolute;
-    bottom: -4px;
-    left: 0;
-    width: 100%;
-    height: 4px;
-    background: linear-gradient(90deg, transparent 0%, #FFD700 20%, #FFA500 50%, #FFD700 80%, transparent 100%);
-    animation: borderGlow 3s ease-in-out infinite;
-}
-@keyframes borderGlow {
-    0%, 100% { opacity: 0.5; }
-    50% { opacity: 1; }
-}
-header img { 
-    height: 120px; 
-    filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.6));
-    margin-bottom: 15px;
-    animation: logoFloat 4s ease-in-out infinite;
-}
-@keyframes logoFloat {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-10px); }
-}
-.header-title {
-    font-family: 'Orbitron', 'Bebas Neue', Arial, sans-serif;
-    font-size: 2.8em;
-    color: #FFD700;
-    letter-spacing: 5px;
-    margin: 10px 0 5px 0;
-    text-shadow: 0 0 10px rgba(255, 215, 0, 0.8), 0 0 20px rgba(255, 215, 0, 0.5), 0 2px 10px #000;
-    font-weight: 900;
-}
-.header-subtitle {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 1.2em;
-    color: #ccc;
-    letter-spacing: 3px;
-    margin: 5px 0 0 0;
-    text-transform: uppercase;
-}
-.header-badge {
-    display: inline-block;
-    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
-    color: #000;
-    padding: 8px 20px;
-    border-radius: 20px;
-    font-weight: bold;
-    font-size: 0.9em;
-    margin-top: 10px;
-    letter-spacing: 2px;
-    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
-}
-.container { 
-    max-width: 1200px; 
-    margin: 40px auto; 
-    padding: 20px; 
-    min-height: 400px;
-    position: relative;
-    z-index: 1;
-}
-.stats-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 20px;
-    margin-bottom: 30px;
-}
-.stat-card {
-    background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%);
-    padding: 20px;
-    border-radius: 15px;
-    border: 2px solid rgba(255, 215, 0, 0.2);
-    text-align: center;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-    transition: all 0.3s ease;
-}
-.stat-card:hover {
-    transform: translateY(-5px);
-    border-color: #FFD700;
-    box-shadow: 0 8px 30px rgba(255, 215, 0, 0.3);
-}
-.stat-icon {
-    font-size: 2.5em;
-    color: #FFD700;
-    margin-bottom: 10px;
-}
-.stat-value {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 2em;
-    color: #FFD700;
-    font-weight: bold;
-}
-.stat-label {
-    font-size: 0.9em;
-    color: #aaa;
-    margin-top: 5px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-.search-container {
-    text-align: center;
-    margin-bottom: 30px;
-    position: relative;
-}
-#buscaGlobal {
-    width: 70%;
-    max-width: 500px;
-    padding: 15px 50px 15px 20px;
-    border-radius: 50px;
-    border: 2px solid rgba(255, 215, 0, 0.3);
-    background: rgba(26, 26, 26, 0.95);
-    color: #FFD700;
-    font-size: 18px;
-    font-family: 'Orbitron', sans-serif;
-    text-align: center;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-}
-#buscaGlobal:focus {
-    outline: none;
-    border-color: #FFD700;
-    box-shadow: 0 0 30px rgba(255, 215, 0, 0.4);
-}
-#buscaGlobal::placeholder { color: rgba(255, 215, 0, 0.5); }
-.busca-limpar-btn {
-    position: absolute;
-    right: calc(15% + 15px);
-    top: 50%;
-    transform: translateY(-50%);
-    background: none;
-    border: none;
-    color: #FFD700;
-    font-size: 1.3em;
-    cursor: pointer;
-    padding: 10px;
-    border-radius: 50%;
-    transition: all 0.3s ease;
-}
-.busca-limpar-btn:hover { background: rgba(255, 215, 0, 0.2); }
-.categoria { 
-    margin: 30px 0; 
-    padding: 25px; 
-    border-radius: 15px; 
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
-    position: relative; 
-    border-left: 6px solid transparent;
-    background: linear-gradient(135deg, rgba(35, 39, 58, 0.95) 0%, rgba(26, 26, 26, 0.95) 100%);
-    border: 2px solid rgba(255, 215, 0, 0.1);
-    transition: all 0.3s ease;
-}
-.categoria:hover {
-    transform: translateX(5px);
-    border-color: rgba(255, 215, 0, 0.3);
-}
-.categoria h2 { 
-    margin: 0 0 20px 0; 
-    font-size: 26px; 
-    font-family: 'Orbitron', 'Bebas Neue', Arial, sans-serif;
-    border-bottom: 2px solid rgba(255, 215, 0, 0.3);
-    padding-bottom: 10px;
-    letter-spacing: 2px;
-    display: flex; 
-    align-items: center; 
-    gap: 15px;
-    text-transform: uppercase;
-}
-.rank-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: rgba(255, 215, 0, 0.1);
-    padding: 5px 15px;
-    border-radius: 20px;
-    font-size: 0.6em;
-    font-weight: bold;
-    color: #FFD700;
-    margin-left: auto;
-}
-.militar-list { list-style: none; padding: 0; margin: 0; }
-.militar { 
-    padding: 15px 20px; 
-    margin: 10px 0; 
-    border-radius: 10px; 
-    font-size: 18px; 
-    display: flex; 
-    justify-content: space-between; 
-    align-items: center; 
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 215, 0, 0.1);
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-    transition: all 0.3s ease;
-    font-family: 'Orbitron', sans-serif;
-}
-.militar:hover {
-    background: rgba(255, 255, 255, 0.08);
-    transform: translateX(10px);
-    border-color: rgba(255, 215, 0, 0.3);
-}
-.militar.highlight { animation: highlightAnim 1s; }
-@keyframes highlightAnim { 
-    0% { background: rgba(255, 215, 0, 0.4); transform: scale(1.03); }
-    50% { background: rgba(255, 215, 0, 0.6); }
-    100% { background: rgba(255, 255, 255, 0.05); transform: scale(1); }
-}
-
-/* CORES POR PATENTE */
-.Soldado { 
-    background: linear-gradient(135deg, rgba(105, 105, 105, 0.85) 0%, rgba(150, 150, 150, 0.85) 100%);
-    color: #fff; 
-    border-left-color: #969696;
-}
-.Cabo { 
-    background: linear-gradient(135deg, rgba(85, 85, 85, 0.9) 0%, rgba(136, 136, 136, 0.9) 100%);
-    color: #fff; 
-    border-left-color: #888;
-}
-.TerceiroSargento { 
-    background: linear-gradient(135deg, rgba(139, 90, 43, 0.8) 0%, rgba(160, 110, 60, 0.8) 100%);
-    color: #fff; 
-    border-left-color: #A06E3C;
-}
-.SegundoSargento { 
-    background: linear-gradient(135deg, rgba(120, 80, 40, 0.85) 0%, rgba(150, 100, 50, 0.85) 100%);
-    color: #fff; 
-    border-left-color: #96642F;
-}
-.PrimeiroSargento { 
-    background: linear-gradient(135deg, rgba(101, 67, 33, 0.9) 0%, rgba(139, 90, 43, 0.9) 100%);
-    color: #fff; 
-    border-left-color: #8B5A2B;
-}
-.Subtenente { 
-    background: linear-gradient(135deg, rgba(139, 69, 19, 0.9) 0%, rgba(160, 82, 45, 0.9) 100%);
-    color: #fff; 
-    border-left-color: #A0522D;
-}
-.Aspirante { 
-    background: linear-gradient(135deg, rgba(70, 130, 180, 0.9) 0%, rgba(100, 149, 237, 0.9) 100%);
-    color: #fff; 
-    border-left-color: #6495ED;
-}
-.SegundoTenente { 
-    background: linear-gradient(135deg, rgba(0, 128, 0, 0.9) 0%, rgba(50, 160, 50, 0.9) 100%);
-    color: #fff; 
-    border-left-color: #32A032;
-}
-.PrimeiroTenente { 
-    background: linear-gradient(135deg, rgba(0, 100, 0, 0.95) 0%, rgba(34, 139, 34, 0.95) 100%);
-    color: #fff; 
-    border-left-color: #228B22;
-}
-.Capitao { 
-    background: linear-gradient(135deg, rgba(0, 0, 139, 0.95) 0%, rgba(30, 60, 114, 0.95) 100%);
-    color: #fff; 
-    border-left-color: #00008B;
-}
-.Major { 
-    background: linear-gradient(135deg, rgba(205, 127, 50, 0.95) 0%, rgba(184, 134, 11, 0.95) 100%);
-    color: #fff; 
-    border-left-color: #CD7F32;
-}
-.TenenteCoronel { 
-    background: linear-gradient(135deg, rgba(192, 192, 192, 0.95) 0%, rgba(234, 234, 234, 0.9) 100%);
-    color: #000; 
-    border-left-color: #C0C0C0;
-}
-.TenenteCoronel h2 { color: #222; }
-.Coronel { 
-    background: linear-gradient(135deg, rgba(255, 215, 0, 0.95) 0%, rgba(255, 235, 150, 0.95) 100%);
-    color: #000; 
-    border-left-color: #FFD700;
-}
-.Coronel h2 { color: #000; text-shadow: 0 2px 10px rgba(255, 215, 0, 0.5); }
-
-#adminBtn { 
-    position: fixed; 
-    top: 24px; 
-    right: 32px; 
-    z-index: 100;
-    background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%);
-    color: #FFD700; 
-    border: 2px solid #FFD700;
-    padding: 12px 28px; 
-    border-radius: 50px; 
-    font-weight: bold; 
-    font-size: 18px; 
-    cursor: pointer; 
-    box-shadow: 0 4px 20px rgba(255, 215, 0, 0.3);
-    transition: all 0.3s ease;
-    font-family: 'Orbitron', sans-serif;
-}
-#adminBtn:hover { 
-    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
-    color: #000;
-    transform: translateY(-2px);
-}
-#adminModalBg { 
-    display: none; 
-    position: fixed; 
-    top: 0; 
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    z-index: 1000;
-    background: rgba(0, 0, 0, 0.95);
-    justify-content: center;
-    align-items: center;
-}
-#adminModal { 
-    background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%);
-    padding: 40px 35px;
-    border-radius: 20px;
-    min-width: 450px;
-    max-width: 95vw;
-    max-height: 90vh;
-    overflow-y: auto;
-    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.9);
-    text-align: center;
-    position: relative;
-    border: 2px solid #FFD700;
-}
-#adminModal h3 { 
-    color: #FFD700;
-    font-family: 'Orbitron', 'Bebas Neue', Arial, sans-serif;
-    margin-top: 0;
-    font-size: 2em;
-    text-transform: uppercase;
-    letter-spacing: 3px;
-}
-#adminModal input[type=password], 
-#adminModal input[type=text], 
-#adminModal select { 
-    width: 90%;
-    padding: 12px;
-    margin-bottom: 15px;
-    border-radius: 10px;
-    border: 2px solid rgba(255, 215, 0, 0.3);
-    background: rgba(0, 0, 0, 0.5);
-    color: #FFD700;
-    font-size: 16px;
-    text-align: center;
-    font-family: 'Orbitron', sans-serif;
-    transition: all 0.3s ease;
-}
-#adminModal input:focus, #adminModal select:focus {
-    outline: none;
-    border-color: #FFD700;
-}
-#adminModal button {
-    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
-    color: #000;
-    font-weight: bold;
-    padding: 12px 25px;
-    border: none;
-    border-radius: 50px;
-    font-size: 16px;
-    margin: 10px 5px;
-    cursor: pointer;
-    font-family: 'Orbitron', sans-serif;
-    transition: all 0.3s ease;
-}
-#adminModal button:hover { transform: translateY(-2px); }
-#fecharModalBtn { 
-    position: absolute;
-    top: -15px;
-    right: -15px;
-    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
-    color: #000;
-    border-radius: 50%;
-    width: 45px;
-    height: 45px;
-    font-size: 24px;
-    border: 3px solid #000;
-    font-weight: bold;
-    cursor: pointer;
-}
-.admin-form-row { 
-    display: flex; 
-    gap: 10px; 
-    align-items: center;
-    margin-bottom: 15px;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-@media (max-width: 768px) { 
-    .header-title { font-size: 1.8em; }
-    .container { padding: 10px; }
-    #adminBtn { top: 10px; right: 10px; padding: 10px 15px; font-size: 14px; }
-    #adminModal { padding: 20px; min-width: 90vw; }
-    #buscaGlobal { width: 90%; }
-    .admin-form-row { flex-direction: column; }
-    .admin-form-row select, .admin-form-row input, .admin-form-row button { width: 100%; }
-}
-.fade-in { animation: fadeIn 0.8s; }
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-::-webkit-scrollbar { width: 12px; background: #0d0d0d; }
-::-webkit-scrollbar-thumb { 
-    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
-    border-radius: 10px;
-}
-#mensagem { 
-    color: #2ECC71;
-    margin-top: 15px;
-    font-weight: bold;
-    font-family: 'Orbitron', sans-serif;
-}
-hr.separator {
-    border: none;
-    border-top: 2px solid rgba(255, 215, 0, 0.3);
-    margin: 25px 0;
-}
-#removerSugestoes { list-style: none; padding: 0; margin: 10px 0; max-height: 200px; overflow-y: auto; }
-#removerSugestoes li {
-    cursor: pointer;
-    padding: 10px;
-    border-radius: 8px;
-    background: rgba(26, 26, 26, 0.8);
-    margin-bottom: 5px;
-    transition: all 0.3s ease;
-    border: 1px solid rgba(255, 215, 0, 0.1);
-}
-#removerSugestoes li:hover {
-    background: rgba(255, 215, 0, 0.2);
-    border-color: #FFD700;
-}
-.no-results {
-    text-align: center;
-    padding: 40px 20px;
-    color: #999;
-    font-family: 'Orbitron', sans-serif;
-    font-size: 1.2em;
+#buscaGlobal{width:60%;max-width:340px;padding:.6em .9em;margin-bottom:.8em;border-radius:.7em;border:none;background:#181c23;color:#FFD700;font-size:18px;border-bottom:2.5px solid #FFD70055;text-align:center;}
+#buscaGlobal::placeholder{color:#FFD70077;}
+.busca-limpar-btn{background:none;border:none;color:#FFD700;font-size:1.3em;margin-left:-32px;margin-top:-2.5em;padding-right:.4em;padding-left:.4em;padding-top:.1em;padding-bottom:.1em;border-radius:.5em;
+cursor:pointer;}
+.busca-limpar-btn:hover{background:#FFD70022;color:white;}
+/* Responsividade extra */
+@media (max-width:400px){
+    #buscaGlobal{width:98%;}
+    .container{padding:.3em;}
 }
 </style>
 </head>
 <body>
 <header>
-<img src="https://i.imgur.com/YourImageID.png" alt="GATE 4º BPCHQ" onerror="this.src='https://via.placeholder.com/120/1a1a1a/FFD700?text=GATE'">
-<h1 class="header-title">4º BPCHQ - GATE</h1>
-<p class="header-subtitle">Batalhão de Operações Especiais</p>
-<div class="header-badge"><i class="fa-solid fa-shield-halved"></i> Sistema de Hierarquia Policial v2.0</div>
+<img src="https://upload.wikimedia.org/wikipedia/commons/4/47/Bras%C3%A3oROTA.png" alt="Brasão ROTA">
+<h1>Hierarquia ROTA</h1>
 </header>
 
-<div class="container">
-    <div class="stats-container">
-        <div class="stat-card">
-            <div class="stat-icon"><i class="fa-solid fa-users"></i></div>
-            <div class="stat-value" id="totalOperadores">0</div>
-            <div class="stat-label">Policiais Ativos</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-icon"><i class="fa-solid fa-ranking-star"></i></div>
-            <div class="stat-value" id="totalPatentes">0</div>
-            <div class="stat-label">Patentes Ativas</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-icon"><i class="fa-solid fa-crown"></i></div>
-            <div class="stat-value" id="oficialSuperior">0</div>
-            <div class="stat-label">Oficiais Superiores</div>
-        </div>
-    </div>
+<!-- Busca Global -->
+<div style="text-align:center;">
+    <input id="buscaGlobal" type="text" placeholder="🔍 Buscar militar ou patente..." aria-label="Buscar militar ou patente">
+    <button class="busca-limpar-btn" id="limparBuscaBtn" title="Limpar busca" style="display:none;"><i class="fa fa-times"></i></button>
 </div>
 
-<div class="search-container">
-    <input id="buscaGlobal" type="text" placeholder="🔍 BUSCAR POLICIAL OU PATENTE..." autocomplete="off">
-    <button class="busca-limpar-btn" id="limparBuscaBtn" style="display:none;"><i class="fa fa-times"></i></button>
-</div>
-
-<button id="adminBtn" onclick="abrirAdminModal()"><i class="fa-solid fa-user-shield"></i> COMANDO</button>
-
+<button id="adminBtn" onclick="abrirAdminModal()" title="Abrir painel administrativo (Ctrl+Shift+A)"><i class="fa-solid fa-user-gear"></i> Admin</button>
 <div class="container" id="hierarquia"></div>
 
-<div id="adminModalBg" onclick="if(event.target===this) fecharAdminModal()">
+<!-- Modal Admin -->
+<div id="adminModalBg">
 <div id="adminModal">
-<button id="fecharModalBtn" onclick="fecharAdminModal()">&times;</button>
+<button id="fecharModalBtn" onclick="fecharAdminModal()" title="Fechar painel administrativo">&times;</button>
 
 <div id="loginAdminDiv">
-<h3><i class="fa-solid fa-lock"></i> ACESSO RESTRITO</h3>
-<p style="color:#ccc;">Autorização do Comando Necessária</p>
-<input type="password" id="senhaADM" placeholder="CÓDIGO DE ACESSO..." autocomplete="off"><br>
-<button onclick="loginADM()"><i class="fa-solid fa-unlock"></i> AUTENTICAR</button>
-<div id="loginMsg" style="color:#E74C3C;margin-top:15px;"></div>
+<h3><i class="fa-solid fa-user-shield"></i> PAINEL ADMINISTRATIVO</h3>
+<p style="color:#ccc;">Acesso restrito ao administrador.</p>
+<input type="password" id="senhaADM" placeholder="Digite a senha..." autocomplete="off" aria-label="Senha do administrador"><br>
+<button onclick="loginADM()"><i class="fa-solid fa-lock-open"></i> Entrar</button>
+<div id="loginMsg" style="color:#ff6666;margin-top:.8em;"></div>
 </div>
 
 <div id="painelADM" style="display:none;">
-<h3><i class="fa-solid fa-user-gear"></i> PAINEL DE COMANDO</h3>
+<h3><i class="fa-solid fa-user-gear"></i> Painel Administrativo</h3>
 
 <form id="addForm" autocomplete="off">
 <div class="admin-form-row">
-<select id="cargoSelect" style="flex:1;"></select>
-<input type="text" id="nomeInput" placeholder="Nome do policial" required maxlength="40" style="flex:2;">
-<button type="submit"><i class="fa-solid fa-plus"></i> ADICIONAR</button>
+<select id="cargoSelect"></select>
+<input type="text" id="nomeInput" placeholder="Nome do militar" required maxlength="32" aria-label="Nome do militar">
+<button type="submit" title="Adicionar militar"><i class="fa-solid fa-plus"></i> Adicionar</button>
 </div>
 </form>
 
 <form id="promoverForm" autocomplete="off">
 <div class="admin-form-row">
-<select id="militarSelect" style="flex:2;"></select>
-<select id="novoCargoSelect" style="flex:1;"></select>
-<button type="submit"><i class="fa-solid fa-arrow-up"></i> PROMOVER</button>
+<select id="militarSelect"></select>
+<select id="novoCargoSelect"></select>
+<button type="submit" title="Promover/mover militar"><i class="fa-solid fa-arrow-up"></i> Promover/Mover</button>
 </div>
 </form>
 
 <form id="removerForm" autocomplete="off">
 <div class="admin-form-row">
-<input type="text" id="removerInput" placeholder="Digite o nome para remover" style="flex:2;">
-<button type="submit" style="background:linear-gradient(135deg, #E74C3C 0%, #C0392B 100%);"><i class="fa-solid fa-user-minus"></i> REMOVER</button>
+<input type="text" id="removerInput" placeholder="Digite o nome do militar para remover" autocomplete="off" aria-label="Remover militar">
+<button type="submit" style="background:#ff4444;color:white;" title="Remover militar"><i class="fa-solid fa-user-minus"></i> Remover</button>
 </div>
-<ul id="removerSugestoes"></ul>
+<ul id="removerSugestoes" style="list-style:none;padding-left:0;margin-top:-8px;"></ul>
 </form>
 
 <hr class="separator">
 
-<div style="margin-bottom:15px;">
-    <button onclick='exportarBackup()'><i class='fa fa-download'></i> EXPORTAR</button>
-    <label for='importBackupInput' style='display:inline-block;margin:0 5px;'>
-        <span style='cursor:pointer;background:rgba(255,215,0,0.2);padding:12px 20px;border-radius:50px;color:#FFD700;font-weight:bold;border:2px solid #FFD700;display:inline-block;'>
-            <i class='fa fa-upload'></i> IMPORTAR
-        </span>
+<!-- Backup/Importação/Reset -->
+<div style='margin-bottom:.7em'>
+    <button onclick='exportarBackup()' title='Exportar backup da hierarquia'><i class='fa fa-download'></i> Exportar Backup</button>
+    <label for='importBackupInput' style='display:inline-block;margin-left:.6em;margin-right:-.4em;' title='Importar backup da hierarquia'>
+        <span style='cursor:pointer;background:#FFD70022;padding:.4em .9em;border-radius:.5em;color:#FFD700;font-weight:bold;'> <i class='fa fa-upload'></i> Importar Backup </span>
         <input type='file' accept='.json' id='importBackupInput' style='display:none'>
     </label>
-    <button onclick='resetarHierarquia()' style='background:linear-gradient(135deg, #E74C3C 0%, #C0392B 100%);'><i class='fa fa-trash-restore'></i> RESETAR</button>
+    <button onclick='resetarHierarquia()' style='background:#ff4444;color:white;' title='Resetar hierarquia para o padrão'><i class='fa fa-trash-restore'></i> Resetar Hierarquia</button>
 </div>
 
-<button onclick="logoutADM()" style="background:#000;color:#FFD700;border:2px solid #FFD700;margin-top:15px;"><i class="fa-solid fa-sign-out"></i> SAIR</button>
-<br><small style="color:rgba(255,215,0,0.6);margin-top:10px;display:block;">✅ Salvamento automático ativado</small>
+<button onclick="logoutADM()" style="margin-top:.8em;background:#222;color:#FFD700;" title='Sair do painel admin'><i class="fa-solid fa-sign-out"></i> Sair do Painel</button>
+<br><small style="color:#FFD70099;">As alterações são salvas automaticamente no seu navegador.</small>
 <div id="mensagem"></div>
 </div>
 </div>
 </div>
 
+<!-- Tooltip dinâmica -->
+<div id='tooltip' class='tooltip' style='display:none'></div>
+
 <script>
-// HIERARQUIA FIXA (DO MENOR PARA O MAIOR POSTO)
+// ===================
+// CONFIGURAÇÃO INICIAL
+// ===================
 const PATENTES = [
-    { nome:'Soldado', classe:'Soldado', icone:'fa-user', categoria:'praca' },
-    { nome:'Cabo', classe:'Cabo', icone:'fa-user', categoria:'praca' },
-    { nome:'3º Sargento', classe:'TerceiroSargento', icone:'fa-user-shield', categoria:'praca' },
-    { nome:'2º Sargento', classe:'SegundoSargento', icone:'fa-user-shield', categoria:'praca' },
-    { nome:'1º Sargento', classe:'PrimeiroSargento', icone:'fa-user-shield', categoria:'praca' },
-    { nome:'Subtenente', classe:'Subtenente', icone:'fa-user-shield', categoria:'praca' },
-    { nome:'Aspirante', classe:'Aspirante', icone:'fa-graduation-cap', categoria:'intermediario' },
-    { nome:'2º Tenente', classe:'SegundoTenente', icone:'fa-user-tie', categoria:'intermediario' },
-    { nome:'1º Tenente', classe:'PrimeiroTenente', icone:'fa-user-tie', categoria:'intermediario' },
-    { nome:'Capitão', classe:'Capitao', icone:'fa-shield', categoria:'intermediario' },
-    { nome:'Major', classe:'Major', icone:'fa-medal', categoria:'superior' },
-    { nome:'Tenente-Coronel', classe:'TenenteCoronel', icone:'fa-star', categoria:'superior' },
-    { nome:'Coronel', classe:'Coronel', icone:'fa-crown', categoria:'superior' },
+    { nome:'Tenente-Coronel', classe:'Tenente-Coronel', icone:'fa-crown' },
+    { nome:'Major', classe:'Major', icone:'fa-star' },
+    { nome:'Capitão', classe:'Capitão', icone:'fa-medal' },
+    { nome:'Tenente', classe:'Tenente', icone:'fa-user-tie' },
+    { nome:'Sargento', classe:'Sargento', icone:'fa-user-shield' },
+    { nome:'Soldado', classe:'Soldado', icone:'fa-user' },
+    { nome:'Estagiário', classe:'Estagiário', icone:'fa-user-graduate' },
 ];
-
 const DADOS_PADRAO = {
-    'Soldado': [],
-    'Cabo': [],
-    '3º Sargento': [],
-    '2º Sargento': [],
-    '1º Sargento': [],
-    'Subtenente': [],
-    'Aspirante': [],
-    '2º Tenente': [],
-    '1º Tenente': [],
-    'Capitão': [],
-    'Major': [],
-    'Tenente-Coronel': [],
-    'Coronel': []
+    'Tenente-Coronel':['Comandante Supremo'],
+    'Major':['Major Silva'],
+    'Capitão':['Capitão Souza'],
+    'Tenente':['Tenente Lima','Tenente Costa'],
+    'Sargento':['Sargento Dias'],
+    'Soldado':['Soldado Alves','Soldado Nunes'],
+    'Estagiário':['Estagiário Júnior']
 };
+function salvarDados(dados){ localStorage.setItem('hierarquiaMilitar',JSON.stringify(dados)); }
+function carregarDados(){ let d=localStorage.getItem('hierarquiaMilitar'); return d?JSON.parse(d):JSON.parse(JSON.stringify(DADOS_PADRAO)); }
 
-const SENHA_ADM = "GATE2026";
-
-function salvarDados(dados){ localStorage.setItem('hierarquiaGATE',JSON.stringify(dados)); }
-function carregarDados(){ 
-    let d=localStorage.getItem('hierarquiaGATE'); 
-    return d ? JSON.parse(d) : JSON.parse(JSON.stringify(DADOS_PADRAO)); 
-}
-
-function renderizar(filtroBusca=''){
+// ===================
+// RENDERIZAÇÃO DA HIERARQUIA
+// ===================
+function renderizar(filtroBusca){
     const dados = carregarDados();
     const container = document.getElementById('hierarquia');
-    container.innerHTML = '';
-    
-    let totalMilitares = 0;
-    let patentesAtivas = 0;
-    let oficiaisSuperiores = 0;
-    let encontrouResultados = false;
-    
-    const termoBusca = filtroBusca.toLowerCase().trim();
-    
-    PATENTES.forEach(patente => {
-        const militares = dados[patente.nome] || [];
-        
-        let militaresFiltrados = militares;
-        if (termoBusca) {
-            const nomePatenteBusca = patente.nome.toLowerCase();
-            const militaresMatch = militares.filter(m => m.toLowerCase().includes(termoBusca));
-            
-            if (nomePatenteBusca.includes(termoBusca)) {
-                militaresFiltrados = militares;
-            } else {
-                militaresFiltrados = militaresMatch;
-            }
-            
-            if (militaresFiltrados.length === 0) return;
-        }
-        
-        encontrouResultados = true;
-        totalMilitares += militares.length;
-        if (militares.length > 0) patentesAtivas++;
-        if (patente.categoria === 'superior') oficiaisSuperiores += militares.length;
-        
-        const div = document.createElement('div');
-        div.className = `categoria ${patente.classe} fade-in`;
-        
-        let html = `
-            <h2>
-                <i class="fa-solid ${patente.icone}"></i>
-                ${patente.nome}
-                <span class="rank-badge">
-                    <i class="fa-solid fa-users"></i>
-                    ${militares.length}
-                </span>
-            </h2>
-        `;
-        
-        if (militaresFiltrados.length > 0) {
-            html += '<ul class="militar-list">';
-            militaresFiltrados.forEach(nome => {
-                html += `<li class="militar">${nome}</li>`;
+    container.innerHTML='';
+    let total=0;
+    PATENTES.forEach(pat=>{
+        let lista = dados[pat.nome] || [];
+        // Filtro global
+        let listaFiltrada = filtroBusca ? lista.filter(n=> n.toLowerCase().includes(filtroBusca.toLowerCase()) ) : lista;
+        if(filtroBusca && !pat.nome.toLowerCase().includes(filtroBusca.toLowerCase()) && listaFiltrada.length===0) return;
+        let html=`<div class="categoria ${pat.classe} fade-in">
+        <h2><i class="fa-solid ${pat.icone}"></i> ${pat.nome} <span style='font-size:.75em;font-weight:bold;color:${pat.classe==="Estagiário"?"#888":"#FFD700"};'>&nbsp;&nbsp;<i class='fa fa-users'></i> ${lista.length}</span></h2>
+        <ul class="militar-list">`;
+        if(listaFiltrada.length===0){html+=`<li style="opacity:.5;font-style:italic;">Nenhum militar</li>`;}
+        else{
+            listaFiltrada.forEach(nome=>{
+                html+=`<li class="militar"><span>${nome}</span></li>`;
+                total++;
             });
-            html += '</ul>';
-        } else if (!termoBusca) {
-            html += '<p style="color:#999;font-style:italic;text-align:center;">Nenhum militar registrado nesta patente</p>';
         }
-        
-        div.innerHTML = html;
-        container.appendChild(div);
+        html+=`</ul></div>`;
+        container.innerHTML+=html;
     });
-    
-    if (!encontrouResultados && termoBusca) {
-        container.innerHTML = '<div class="no-results"><i class="fa-solid fa-magnifying-glass"></i><br>Nenhum resultado encontrado para "' + filtroBusca + '"</div>';
+    if(filtroBusca && total===0){
+        container.innerHTML = `<div style='text-align:center;color:#FFD700;font-size:1.25em;margin-top:2.5em;'>Nenhum resultado encontrado.</div>`;
     }
-    
-    document.getElementById('totalOperadores').textContent = totalMilitares;
-    document.getElementById('totalPatentes').textContent = patentesAtivas;
-    document.getElementById('oficialSuperior').textContent = oficiaisSuperiores;
+    atualizarSelects();
 }
-
-// BUSCA GLOBAL
-document.getElementById('buscaGlobal').addEventListener('input', function(e){
-    const valor = e.target.value;
-    const btnLimpar = document.getElementById('limparBuscaBtn');
-    
-    if (valor.trim()) {
-        btnLimpar.style.display = 'block';
-    } else {
-        btnLimpar.style.display = 'none';
-    }
-    
-    renderizar(valor);
-});
-
-document.getElementById('limparBuscaBtn').addEventListener('click', function(){
-    document.getElementById('buscaGlobal').value = '';
-    this.style.display = 'none';
-    renderizar();
-});
-
-// ADMIN MODAL
-function abrirAdminModal(){
-    document.getElementById('adminModalBg').style.display = 'flex';
-    verificarLogin();
-}
-
-function fecharAdminModal(){
-    document.getElementById('adminModalBg').style.display = 'none';
-}
-
-function verificarLogin(){
-    const logado = sessionStorage.getItem('adminLogado');
-    if (logado === 'true') {
-        document.getElementById('loginAdminDiv').style.display = 'none';
-        document.getElementById('painelADM').style.display = 'block';
-        popularSelects();
-    } else {
-        document.getElementById('loginAdminDiv').style.display = 'block';
-        document.getElementById('painelADM').style.display = 'none';
-    }
-}
-
-function loginADM(){
-    const senha = document.getElementById('senhaADM').value;
-    const msg = document.getElementById('loginMsg');
-    
-    if (senha === SENHA_ADM) {
-        sessionStorage.setItem('adminLogado', 'true');
-        msg.style.color = '#2ECC71';
-        msg.textContent = '✓ Acesso autorizado!';
-        setTimeout(() => {
-            verificarLogin();
-            msg.textContent = '';
-            document.getElementById('senhaADM').value = '';
-        }, 800);
-    } else {
-        msg.style.color = '#E74C3C';
-        msg.textContent = '✗ Código de acesso inválido';
-    }
-}
-
-function logoutADM(){
-    sessionStorage.removeItem('adminLogado');
-    fecharAdminModal();
-}
-
-function popularSelects(){
-    const dados = carregarDados();
-    
-    const cargoSelect = document.getElementById('cargoSelect');
-    const novoCargoSelect = document.getElementById('novoCargoSelect');
-    const militarSelect = document.getElementById('militarSelect');
-    
-    cargoSelect.innerHTML = '<option value="">Selecione a patente</option>';
-    novoCargoSelect.innerHTML = '<option value="">Nova patente</option>';
-    militarSelect.innerHTML = '<option value="">Selecione o militar</option>';
-    
-    PATENTES.forEach(p => {
-        cargoSelect.innerHTML += `<option value="${p.nome}">${p.nome}</option>`;
-        novoCargoSelect.innerHTML += `<option value="${p.nome}">${p.nome}</option>`;
-    });
-    
-    PATENTES.forEach(p => {
-        const militares = dados[p.nome] || [];
-        militares.forEach(m => {
-            militarSelect.innerHTML += `<option value="${p.nome}|||${m}">${m} (${p.nome})</option>`;
-        });
-    });
-}
-
-// ADICIONAR MILITAR
-document.getElementById('addForm').addEventListener('submit', function(e){
-    e.preventDefault();
-    
-    const patente = document.getElementById('cargoSelect').value;
-    const nome = document.getElementById('nomeInput').value.trim();
-    
-    if (!patente || !nome) {
-        mostrarMensagem('Preencha todos os campos!', false);
-        return;
-    }
-    
-    const dados = carregarDados();
-    
-    if (dados[patente].includes(nome)) {
-        mostrarMensagem('Este nome já existe nesta patente!', false);
-        return;
-    }
-    
-    dados[patente].push(nome);
-    salvarDados(dados);
-    renderizar();
-    popularSelects();
-    
-    document.getElementById('nomeInput').value = '';
-    mostrarMensagem(`✓ ${nome} adicionado(a) como ${patente}`, true);
-    
-    setTimeout(() => {
-        destacarMilitar(nome);
-    }, 100);
-});
-
-// PROMOVER MILITAR
-document.getElementById('promoverForm').addEventListener('submit', function(e){
-    e.preventDefault();
-    
-    const selecionado = document.getElementById('militarSelect').value;
-    const novaPatente = document.getElementById('novoCargoSelect').value;
-    
-    if (!selecionado || !novaPatente) {
-        mostrarMensagem('Selecione o militar e a nova patente!', false);
-        return;
-    }
-    
-    const [patenteAtual, nome] = selecionado.split('|||');
-    const dados = carregarDados();
-    
-    dados[patenteAtual] = dados[patenteAtual].filter(m => m !== nome);
-    
-    if (!dados[novaPatente].includes(nome)) {
-        dados[novaPatente].push(nome);
-    }
-    
-    salvarDados(dados);
-    renderizar();
-    popularSelects();
-    
-    mostrarMensagem(`✓ ${nome} movido(a) para ${novaPatente}`, true);
-    
-    setTimeout(() => {
-        destacarMilitar(nome);
-    }, 100);
-});
-
-// REMOVER MILITAR
-document.getElementById('removerInput').addEventListener('input', function(e){
-    const termo = e.target.value.toLowerCase().trim();
-    const sugestoes = document.getElementById('removerSugestoes');
-    sugestoes.innerHTML = '';
-    
-    if (!termo) return;
-    
-    const dados = carregarDados();
-    const matches = [];
-    
-    PATENTES.forEach(p => {
-        const militares = dados[p.nome] || [];
-        militares.forEach(m => {
-            if (m.toLowerCase().includes(termo)) {
-                matches.push({ nome: m, patente: p.nome });
-            }
-        });
-    });
-    
-    matches.forEach(match => {
-        const li = document.createElement('li');
-        li.textContent = `${match.nome} (${match.patente})`;
-        li.onclick = () => {
-            document.getElementById('removerInput').value = match.nome;
-            sugestoes.innerHTML = '';
-        };
-        sugestoes.appendChild(li);
-    });
-});
-
-document.getElementById('removerForm').addEventListener('submit', function(e){
-    e.preventDefault();
-    
-    const nome = document.getElementById('removerInput').value.trim();
-    
-    if (!nome) {
-        mostrarMensagem('Digite o nome do militar!', false);
-        return;
-    }
-    
-    const dados = carregarDados();
-    let removido = false;
-    
-    PATENTES.forEach(p => {
-        const index = dados[p.nome].indexOf(nome);
-        if (index !== -1) {
-            dados[p.nome].splice(index, 1);
-            removido = true;
-        }
-    });
-    
-    if (removido) {
-        salvarDados(dados);
-        renderizar();
-        popularSelects();
-        document.getElementById('removerInput').value = '';
-        document.getElementById('removerSugestoes').innerHTML = '';
-        mostrarMensagem(`✓ ${nome} removido(a) do sistema`, true);
-    } else {
-        mostrarMensagem('Militar não encontrado!', false);
-    }
-});
-
-// EXPORTAR BACKUP
-function exportarBackup(){
-    const dados = carregarDados();
-    const json = JSON.stringify(dados, null, 2);
-    const blob = new Blob([json], {type: 'application/json'});
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `backup_gate_${new Date().toISOString().split('T')[0]}.json`;
-    a.click();
-    URL.revokeObjectURL(url);
-    mostrarMensagem('✓ Backup exportado com sucesso!', true);
-}
-
-// IMPORTAR BACKUP
-document.getElementById('importBackupInput').addEventListener('change', function(e){
-    const file = e.target.files[0];
-    if (!file) return;
-    
-    const reader = new FileReader();
-    reader.onload = function(ev){
-        try {
-            const dados = JSON.parse(ev.target.result);
-            salvarDados(dados);
-            renderizar();
-            popularSelects();
-            mostrarMensagem('✓ Backup importado com sucesso!', true);
-        } catch(err) {
-            mostrarMensagem('✗ Erro ao importar backup!', false);
-        }
-    };
-    reader.readAsText(file);
-    e.target.value = '';
-});
-
-// RESETAR HIERARQUIA
-function resetarHierarquia(){
-    if (confirm('⚠️ ATENÇÃO: Todos os dados serão perdidos!\n\nDeseja realmente resetar a hierarquia?')) {
-        salvarDados(JSON.parse(JSON.stringify(DADOS_PADRAO)));
-        renderizar();
-        popularSelects();
-        mostrarMensagem('✓ Hierarquia resetada para o padrão', true);
-    }
-}
-
-function mostrarMensagem(texto, sucesso){
-    const msg = document.getElementById('mensagem');
-    msg.textContent = texto;
-    msg.style.color = sucesso ? '#2ECC71' : '#E74C3C';
-    setTimeout(() => { msg.textContent = ''; }, 3000);
-}
-
-function destacarMilitar(nome){
-    const militares = document.querySelectorAll('.militar');
-    militares.forEach(el => {
-        if (el.textContent === nome) {
-            el.classList.add('highlight');
-            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-    });
-}
-
-// ATALHOS DE TECLADO
-document.addEventListener('keydown', function(e){
-    if (e.ctrlKey && e.shiftKey && e.key === 'A') {
-        e.preventDefault();
-        abrirAdminModal();
-    }
-    
-    if (e.key === 'Escape') {
-        fecharAdminModal();
-    }
-    
-    if (e.ctrlKey && e.key === 's') {
-        e.preventDefault();
-        mostrarMensagem('✓ Os dados são salvos automaticamente!', true);
-    }
-});
-
-// ENTER NO LOGIN
-document.getElementById('senhaADM').addEventListener('keypress', function(e){
-    if (e.key === 'Enter') {
-        loginADM();
-    }
-});
-
-// INICIALIZAÇÃO
 renderizar();
+
+// ===================
+// BUSCA GLOBAL
+// ===================
+const buscaInput = document.getElementById('buscaGlobal');
+const limparBuscaBtn = document.getElementById('limparBuscaBtn');
+buscaInput.addEventListener('input',()=>{
+    renderizar(buscaInput.value);
+    limparBuscaBtn.style.display = buscaInput.value ? 'inline-block':'none';
+});
+limparBuscaBtn.onclick = ()=>{
+    buscaInput.value='';
+    renderizar();
+    limparBuscaBtn.style.display='none';
+    buscaInput.focus();
+};
+
+// ===================
+// ADICIONAR MILITAR
+// ===================
+document.getElementById('addForm').onsubmit=function(e){
+e.preventDefault();if(!isADM()) return alert("Acesso restrito ao ADM!");
+let cargo=document.getElementById('cargoSelect').value;
+let nome=document.getElementById('nomeInput').value.trim();
+if(!nome) return alert('Digite o nome!');
+let dados=carregarDados();
+if(!dados[cargo]) dados[cargo]=[];
+if(dados[cargo].includes(nome)) return alert('Já existe esse nome nesse cargo!');
+dados[cargo].push(nome);
+salvarDados(dados);
+document.getElementById('nomeInput').value='';
+renderizar(buscaInput.value);
+destacarMilitar(cargo,nome);
+mostrarMensagem(`Militar ${nome} adicionado!`);
+document.getElementById('nomeInput').focus();
+}
+
+// ===================
+// PROMOVER/MOVER MILITAR
+// ===================
+document.getElementById('promoverForm').onsubmit=function(e){
+e.preventDefault();if(!isADM()) return alert("Acesso restrito ao ADM!");
+let [cargoAtual,nome]=document.getElementById('militarSelect').value.split('|');
+let novoCargo=document.getElementById('novoCargoSelect').value;
+if(cargoAtual===novoCargo) return alert('Selecione um cargo diferente!');
+let dados=carregarDados();
+dados[cargoAtual]=dados[cargoAtual].filter(n=>n!==nome);
+if(!dados[novoCargo]) dados[novoCargo]=[];
+dados[novoCargo].push(nome);
+salvarDados(dados);
+renderizar(buscaInput.value);
+destacarMilitar(novoCargo,nome);
+mostrarMensagem(`Militar ${nome} movido para ${novoCargo}!`);
+}
+
+// ===================
+// REMOVER MILITAR
+// ===================
+const inputRemover=document.getElementById('removerInput');
+const sugestoes=document.getElementById('removerSugestoes');
+let sugestoesData=[];
+inputRemover.addEventListener('input',()=>{
+const busca=inputRemover.value.toLowerCase();
+const dados=carregarDados();
+let resultados=[];
+PATENTES.forEach(pat=>(dados[pat.nome]||[]).forEach(n=>{if(n.toLowerCase().includes(busca)) resultados.push({nome:n,cargo:pat.nome});}));
+sugestoes.innerHTML='';
+sugestoesData=resultados;
+resultados.forEach(res=>{
+const li=document.createElement('li');
+li.style.cursor='pointer'; li.style.padding='4px 8px'; li.style.borderRadius='5px'; li.style.background='#23273a'; li.style.marginBottom='3px';
+li.textContent=`${res.nome} (${res.cargo})`;
+li.addEventListener('click',()=>{inputRemover.value=`${res.nome}|${res.cargo}`; sugestoes.innerHTML=''; inputRemover.focus();});
+sugestoes.appendChild(li);
+});
+});
+
+document.getElementById('removerForm').onsubmit=function(e){
+e.preventDefault();if(!isADM()) return alert("Acesso restrito ao ADM!");
+if(!inputRemover.value.includes('|')) return alert('Selecione um militar da lista!');
+let [nome,cargo]=inputRemover.value.split('|');
+let dados=carregarDados();
+dados[cargo]=dados[cargo].filter(n=>n!==nome);
+salvarDados(dados);
+inputRemover.value=''; sugestoes.innerHTML='';
+renderizar(buscaInput.value);
+mostrarMensagem(`Militar ${nome} removido!`);
+}
+
+// ===================
+// FUNÇÕES AUXILIARES
+// ===================
+function atualizarSelects(){
+let cargoSel=document.getElementById('cargoSelect');
+cargoSel.innerHTML=PATENTES.map(p=>`<option value="${p.nome}">${p.nome}</option>`).join('');
+let militarSel=document.getElementById('militarSelect');
+let dados=carregarDados();
+let opcoes=[];
+PATENTES.forEach(p=>(dados[p.nome]||[]).forEach(n=>{opcoes.push(`<option value="${p.nome}|${n}">${n} (${p.nome})</option>`);}));
+militarSel.innerHTML=opcoes.length?opcoes.join(''):`<option>Nenhum militar</option>`;
+let novoCargoSel=document.getElementById('novoCargoSelect');
+novoCargoSel.innerHTML=PATENTES.map(p=>`<option value="${p.nome}">${p.nome}</option>`).join('');
+}
+
+function destacarMilitar(cargo,nome){
+setTimeout(()=>{
+document.querySelectorAll(`.categoria.${cargo} .militar`).forEach(el=>{
+if(el.textContent===nome){el.classList.add('highlight'); setTimeout(()=>{el.classList.remove('highlight');},800);}
+});
+},150);
+}
+
+function mostrarMensagem(msg){
+const m=document.getElementById('mensagem');
+m.textContent=msg;
+setTimeout(()=>{m.textContent='';},2500);
+}
+
+// ===================
+// ADMINISTRAÇÃO
+// ===================
+const SENHA_ADM = "ROTA2026";
+function isADM(){return sessionStorage.getItem("admLogado")==="sim";}
+function abrirAdminModal(){
+document.getElementById("adminModalBg").style.display = "flex";
+if(isADM()){
+document.getElementById("loginAdminDiv").style.display='none';
+document.getElementById("painelADM").style.display='block';
+setTimeout(()=>{document.getElementById("nomeInput").focus();},200);
+}else{
+document.getElementById("loginAdminDiv").style.display='block';
+document.getElementById("painelADM").style.display='none';
+document.getElementById("senhaADM").value='';
+document.getElementById("loginMsg").innerText='';
+setTimeout(()=>{document.getElementById("senhaADM").focus();},200);
+}
+}
+function fecharAdminModal(){
+document.getElementById("adminModalBg").style.display = "none";
+inputRemover.value=''; sugestoes.innerHTML='';
+document.getElementById("senhaADM").value='';
+document.getElementById("loginMsg").innerText='';
+}
+function loginADM(){
+let senha=document.getElementById("senhaADM").value.trim();
+if(senha===SENHA_ADM){ sessionStorage.setItem("admLogado","sim"); document.getElementById("loginAdminDiv").style.display='none'; document.getElementById("painelADM").style.display='block'; renderizar(buscaInput.value);}
+else{ document.getElementById("loginMsg").innerText = "Senha incorreta!"; }
+}
+function logoutADM(){
+sessionStorage.removeItem("admLogado"); document.getElementById("painelADM").style.display='none'; document.getElementById("loginAdminDiv").style.display='block'; renderizar(buscaInput.value);
+}
+
+// Atalhos de teclado
+window.addEventListener('keydown',function(e){
+if(e.key==="Escape") fecharAdminModal();
+if(e.ctrlKey && e.shiftKey && e.key.toLowerCase()==='a'){abrirAdminModal();}
+if(e.ctrlKey && e.key.toLowerCase()==='s'){e.preventDefault(); mostrarMensagem("Tudo já é salvo automaticamente!");}
+});
+
+// ===================
+// BACKUP / IMPORTAÇÃO / RESET
+// ===================
+function exportarBackup(){
+const dados = carregarDados();
+const blob = new Blob([JSON.stringify(dados,null,2)],{type:"application/json"});
+const url = URL.createObjectURL(blob);
+const a = document.createElement('a');
+a.href=url;a.download=`hierarquia_rota_${new Date().toISOString().slice(0,10)}.json`;
+document.body.appendChild(a); a.click(); setTimeout(()=>{a.remove();URL.revokeObjectURL(url);},500);
+mostrarMensagem("Backup exportado!");
+}
+document.getElementById('importBackupInput').addEventListener('change',function(e){
+const file = e.target.files[0];
+if(!file) return;
+const reader = new FileReader();
+reader.onload = function(ev){
+try{
+const obj = JSON.parse(ev.target.result);
+if(typeof obj !== 'object') throw "Formato inválido";
+salvarDados(obj);
+renderizar(buscaInput.value);
+mostrarMensagem("Backup importado com sucesso!");
+fecharAdminModal();
+}catch(err){alert("Arquivo inválido!");}
+};
+reader.readAsText(file);
+this.value='';
+});
+function resetarHierarquia(){
+if(confirm("Tem certeza que deseja resetar a hierarquia para o padrão? Esta ação não pode ser desfeita.")){
+salvarDados(DADOS_PADRAO);
+renderizar(buscaInput.value);
+mostrarMensagem("Hierarquia resetada!");
+fecharAdminModal();
+}
+}
+
+// ===================
+// TOOLTIP DINÂMICO
+// ===================
+const tooltip = document.getElementById('tooltip');
+document.querySelectorAll('[title]').forEach(el=>{
+el.addEventListener('mouseenter',function(e){
+tooltip.textContent=this.title;
+tooltip.style.display='block';
+const rect=this.getBoundingClientRect();
+tooltip.style.left=(rect.left+rect.width/2-tooltip.offsetWidth/2)+'px';
+tooltip.style.top=(rect.top-window.scrollY-tooltip.offsetHeight-12)+'px';
+});
+el.addEventListener('mouseleave',()=>{tooltip.style.display='none';});
+});
+window.addEventListener('mousemove',(e)=>{
+if(tooltip.style.display==='block'){
+tooltip.style.left=(e.pageX-tooltip.offsetWidth/2)+'px';
+tooltip.style.top=(e.pageY-tooltip.offsetHeight-18)+'px';
+}
+});
+
+// Acessibilidade extra
+['cargoSelect','militarSelect','novoCargoSelect','nomeInput','removerInput'].forEach(id=>{
+let el=document.getElementById(id); if(el) el.setAttribute('tabindex','0');
+});
+</script>
+</body>
+</html>
