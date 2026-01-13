@@ -2,18 +2,16 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>4º BPCHQ - GATE | Hierarquia Operacional</title>
+<title>4º BPCHQ - GATE | Sistema de Hierarquia Policial</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 <style>
-* { box-sizing: border-box; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
 body { 
     font-family: 'Arial', sans-serif; 
     background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%);
     color: #f1f1f1; 
-    margin: 0; 
-    padding: 0; 
     min-height: 100vh;
     position: relative;
     overflow-x: hidden;
@@ -56,7 +54,7 @@ header::after {
     50% { opacity: 1; }
 }
 header img { 
-    height: 100px; 
+    height: 120px; 
     filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.6));
     margin-bottom: 15px;
     animation: logoFloat 4s ease-in-out infinite;
@@ -95,7 +93,7 @@ header img {
     box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
 }
 .container { 
-    max-width: 1000px; 
+    max-width: 1200px; 
     margin: 40px auto; 
     padding: 20px; 
     min-height: 400px;
@@ -164,9 +162,7 @@ header img {
     border-color: #FFD700;
     box-shadow: 0 0 30px rgba(255, 215, 0, 0.4);
 }
-#buscaGlobal::placeholder {
-    color: rgba(255, 215, 0, 0.5);
-}
+#buscaGlobal::placeholder { color: rgba(255, 215, 0, 0.5); }
 .busca-limpar-btn {
     position: absolute;
     right: calc(15% + 15px);
@@ -181,9 +177,7 @@ header img {
     border-radius: 50%;
     transition: all 0.3s ease;
 }
-.busca-limpar-btn:hover {
-    background: rgba(255, 215, 0, 0.2);
-}
+.busca-limpar-btn:hover { background: rgba(255, 215, 0, 0.2); }
 .categoria { 
     margin: 30px 0; 
     padding: 25px; 
@@ -201,7 +195,7 @@ header img {
 }
 .categoria h2 { 
     margin: 0 0 20px 0; 
-    font-size: 28px; 
+    font-size: 26px; 
     font-family: 'Orbitron', 'Bebas Neue', Arial, sans-serif;
     border-bottom: 2px solid rgba(255, 215, 0, 0.3);
     padding-bottom: 10px;
@@ -221,12 +215,9 @@ header img {
     font-size: 0.6em;
     font-weight: bold;
     color: #FFD700;
+    margin-left: auto;
 }
-.militar-list { 
-    list-style: none; 
-    padding: 0; 
-    margin: 0; 
-}
+.militar-list { list-style: none; padding: 0; margin: 0; }
 .militar { 
     padding: 15px 20px; 
     margin: 10px 0; 
@@ -246,51 +237,94 @@ header img {
     transform: translateX(10px);
     border-color: rgba(255, 215, 0, 0.3);
 }
-.militar.highlight { 
-    animation: highlightAnim 1s;
-}
+.militar.highlight { animation: highlightAnim 1s; }
 @keyframes highlightAnim { 
     0% { background: rgba(255, 215, 0, 0.4); transform: scale(1.03); }
     50% { background: rgba(255, 215, 0, 0.6); }
     100% { background: rgba(255, 255, 255, 0.05); transform: scale(1); }
 }
-.Comandante { 
-    background: linear-gradient(135deg, rgba(255, 215, 0, 0.9) 0%, rgba(255, 235, 150, 0.9) 100%);
+
+/* CORES POR PATENTE - HIERARQUIA POLICIAL */
+.Coronel { 
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.95) 0%, rgba(255, 235, 150, 0.95) 100%);
     color: #000; 
     border-left-color: #FFD700;
 }
-.Comandante h2 { color: #000; }
-.SubComandante { 
-    background: linear-gradient(135deg, rgba(192, 192, 192, 0.9) 0%, rgba(234, 234, 234, 0.8) 100%);
+.Coronel h2 { color: #000; text-shadow: 0 2px 10px rgba(255, 215, 0, 0.5); }
+
+.TenenteCoronel { 
+    background: linear-gradient(135deg, rgba(192, 192, 192, 0.95) 0%, rgba(234, 234, 234, 0.9) 100%);
     color: #000; 
     border-left-color: #C0C0C0;
 }
-.SubComandante h2 { color: #222; }
+.TenenteCoronel h2 { color: #222; }
+
+.Major { 
+    background: linear-gradient(135deg, rgba(205, 127, 50, 0.95) 0%, rgba(184, 134, 11, 0.95) 100%);
+    color: #fff; 
+    border-left-color: #CD7F32;
+}
+
 .Capitao { 
-    background: linear-gradient(135deg, rgba(0, 0, 139, 0.9) 0%, rgba(30, 60, 114, 0.9) 100%);
+    background: linear-gradient(135deg, rgba(0, 0, 139, 0.95) 0%, rgba(30, 60, 114, 0.95) 100%);
     color: #fff; 
     border-left-color: #00008B;
 }
-.Tenente { 
-    background: linear-gradient(135deg, rgba(0, 100, 0, 0.9) 0%, rgba(67, 160, 71, 0.9) 100%);
+
+.PrimeiroTenente { 
+    background: linear-gradient(135deg, rgba(0, 100, 0, 0.95) 0%, rgba(34, 139, 34, 0.95) 100%);
     color: #fff; 
-    border-left-color: #43a047;
+    border-left-color: #228B22;
 }
-.Sargento { 
-    background: linear-gradient(135deg, rgba(101, 67, 33, 0.9) 0%, rgba(184, 134, 11, 0.9) 100%);
+
+.SegundoTenente { 
+    background: linear-gradient(135deg, rgba(0, 128, 0, 0.9) 0%, rgba(50, 160, 50, 0.9) 100%);
     color: #fff; 
-    border-left-color: #b8860b;
+    border-left-color: #32A032;
 }
-.Soldado { 
+
+.Aspirante { 
+    background: linear-gradient(135deg, rgba(70, 130, 180, 0.9) 0%, rgba(100, 149, 237, 0.9) 100%);
+    color: #fff; 
+    border-left-color: #6495ED;
+}
+
+.Subtenente { 
+    background: linear-gradient(135deg, rgba(139, 69, 19, 0.9) 0%, rgba(160, 82, 45, 0.9) 100%);
+    color: #fff; 
+    border-left-color: #A0522D;
+}
+
+.PrimeiroSargento { 
+    background: linear-gradient(135deg, rgba(101, 67, 33, 0.9) 0%, rgba(139, 90, 43, 0.9) 100%);
+    color: #fff; 
+    border-left-color: #8B5A2B;
+}
+
+.SegundoSargento { 
+    background: linear-gradient(135deg, rgba(120, 80, 40, 0.85) 0%, rgba(150, 100, 50, 0.85) 100%);
+    color: #fff; 
+    border-left-color: #96642F;
+}
+
+.TerceiroSargento { 
+    background: linear-gradient(135deg, rgba(139, 90, 43, 0.8) 0%, rgba(160, 110, 60, 0.8) 100%);
+    color: #fff; 
+    border-left-color: #A06E3C;
+}
+
+.Cabo { 
     background: linear-gradient(135deg, rgba(85, 85, 85, 0.9) 0%, rgba(136, 136, 136, 0.9) 100%);
     color: #fff; 
     border-left-color: #888;
 }
-.Recruta { 
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(234, 234, 234, 0.9) 100%);
-    color: #222; 
-    border-left-color: #bbb;
+
+.Soldado { 
+    background: linear-gradient(135deg, rgba(105, 105, 105, 0.85) 0%, rgba(150, 150, 150, 0.85) 100%);
+    color: #fff; 
+    border-left-color: #969696;
 }
+
 #adminBtn { 
     position: fixed; 
     top: 24px; 
@@ -321,7 +355,7 @@ header img {
     width: 100vw;
     height: 100vh;
     z-index: 1000;
-    background: rgba(0, 0, 0, 0.9);
+    background: rgba(0, 0, 0, 0.95);
     justify-content: center;
     align-items: center;
 }
@@ -329,8 +363,10 @@ header img {
     background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%);
     padding: 40px 35px;
     border-radius: 20px;
-    min-width: 400px;
+    min-width: 450px;
     max-width: 95vw;
+    max-height: 90vh;
+    overflow-y: auto;
     box-shadow: 0 15px 50px rgba(0, 0, 0, 0.9);
     text-align: center;
     position: relative;
@@ -347,20 +383,19 @@ header img {
 #adminModal input[type=password], 
 #adminModal input[type=text], 
 #adminModal select { 
-    width: 85%;
+    width: 90%;
     padding: 12px;
     margin-bottom: 15px;
     border-radius: 10px;
     border: 2px solid rgba(255, 215, 0, 0.3);
     background: rgba(0, 0, 0, 0.5);
     color: #FFD700;
-    font-size: 17px;
+    font-size: 16px;
     text-align: center;
     font-family: 'Orbitron', sans-serif;
     transition: all 0.3s ease;
 }
-#adminModal input:focus,
-#adminModal select:focus {
+#adminModal input:focus, #adminModal select:focus {
     outline: none;
     border-color: #FFD700;
 }
@@ -371,15 +406,13 @@ header img {
     padding: 12px 25px;
     border: none;
     border-radius: 50px;
-    font-size: 18px;
+    font-size: 16px;
     margin: 10px 5px;
     cursor: pointer;
     font-family: 'Orbitron', sans-serif;
     transition: all 0.3s ease;
 }
-#adminModal button:hover {
-    transform: translateY(-2px);
-}
+#adminModal button:hover { transform: translateY(-2px); }
 #fecharModalBtn { 
     position: absolute;
     top: -15px;
@@ -402,12 +435,14 @@ header img {
     flex-wrap: wrap;
     justify-content: center;
 }
-@media (max-width: 600px) { 
+@media (max-width: 768px) { 
     .header-title { font-size: 1.8em; }
     .container { padding: 10px; }
     #adminBtn { top: 10px; right: 10px; padding: 10px 15px; font-size: 14px; }
     #adminModal { padding: 20px; min-width: 90vw; }
     #buscaGlobal { width: 90%; }
+    .admin-form-row { flex-direction: column; }
+    .admin-form-row select, .admin-form-row input, .admin-form-row button { width: 100%; }
 }
 .fade-in { animation: fadeIn 0.8s; }
 @keyframes fadeIn {
@@ -430,6 +465,7 @@ hr.separator {
     border-top: 2px solid rgba(255, 215, 0, 0.3);
     margin: 25px 0;
 }
+#removerSugestoes { list-style: none; padding: 0; margin: 10px 0; max-height: 200px; overflow-y: auto; }
 #removerSugestoes li {
     cursor: pointer;
     padding: 10px;
@@ -437,18 +473,20 @@ hr.separator {
     background: rgba(26, 26, 26, 0.8);
     margin-bottom: 5px;
     transition: all 0.3s ease;
+    border: 1px solid rgba(255, 215, 0, 0.1);
 }
 #removerSugestoes li:hover {
     background: rgba(255, 215, 0, 0.2);
+    border-color: #FFD700;
 }
 </style>
 </head>
 <body>
 <header>
-<img src="https://upload.wikimedia.org/wikipedia/commons/4/47/Bras%C3%A3oROTA.png" alt="Brasão 4º BPCHQ">
+<img src="https://i.imgur.com/YourImageID.png" alt="GATE 4º BPCHQ" onerror="this.src='https://via.placeholder.com/120/1a1a1a/FFD700?text=GATE'">
 <h1 class="header-title">4º BPCHQ - GATE</h1>
 <p class="header-subtitle">Batalhão de Operações Especiais</p>
-<div class="header-badge"><i class="fa-solid fa-shield-halved"></i> Sistema de Hierarquia v2.0</div>
+<div class="header-badge"><i class="fa-solid fa-shield-halved"></i> Sistema de Hierarquia Policial v2.0</div>
 </header>
 
 <div class="container">
@@ -456,7 +494,7 @@ hr.separator {
         <div class="stat-card">
             <div class="stat-icon"><i class="fa-solid fa-users"></i></div>
             <div class="stat-value" id="totalOperadores">0</div>
-            <div class="stat-label">Operadores Ativos</div>
+            <div class="stat-label">Policiais Ativos</div>
         </div>
         <div class="stat-card">
             <div class="stat-icon"><i class="fa-solid fa-ranking-star"></i></div>
@@ -465,14 +503,14 @@ hr.separator {
         </div>
         <div class="stat-card">
             <div class="stat-icon"><i class="fa-solid fa-crown"></i></div>
-            <div class="stat-value" id="comandoAtivo">1</div>
-            <div class="stat-label">Comando Superior</div>
+            <div class="stat-value" id="oficialSuperior">0</div>
+            <div class="stat-label">Oficiais Superiores</div>
         </div>
     </div>
 </div>
 
 <div class="search-container">
-    <input id="buscaGlobal" type="text" placeholder="🔍 BUSCAR OPERADOR OU PATENTE...">
+    <input id="buscaGlobal" type="text" placeholder="🔍 BUSCAR POLICIAL OU PATENTE..." autocomplete="off">
     <button class="busca-limpar-btn" id="limparBuscaBtn" style="display:none;"><i class="fa fa-times"></i></button>
 </div>
 
@@ -480,14 +518,14 @@ hr.separator {
 
 <div class="container" id="hierarquia"></div>
 
-<div id="adminModalBg">
+<div id="adminModalBg" onclick="if(event.target===this) fecharAdminModal()">
 <div id="adminModal">
 <button id="fecharModalBtn" onclick="fecharAdminModal()">&times;</button>
 
 <div id="loginAdminDiv">
 <h3><i class="fa-solid fa-lock"></i> ACESSO RESTRITO</h3>
-<p style="color:#ccc;">Autorização necessária</p>
-<input type="password" id="senhaADM" placeholder="CÓDIGO DE ACESSO..."><br>
+<p style="color:#ccc;">Autorização do Comando Necessária</p>
+<input type="password" id="senhaADM" placeholder="CÓDIGO DE ACESSO..." autocomplete="off"><br>
 <button onclick="loginADM()"><i class="fa-solid fa-unlock"></i> AUTENTICAR</button>
 <div id="loginMsg" style="color:#E74C3C;margin-top:15px;"></div>
 </div>
@@ -495,36 +533,36 @@ hr.separator {
 <div id="painelADM" style="display:none;">
 <h3><i class="fa-solid fa-user-gear"></i> PAINEL DE COMANDO</h3>
 
-<form id="addForm">
+<form id="addForm" autocomplete="off">
 <div class="admin-form-row">
-<select id="cargoSelect"></select>
-<input type="text" id="nomeInput" placeholder="Nome do operador" required maxlength="32">
+<select id="cargoSelect" style="flex:1;"></select>
+<input type="text" id="nomeInput" placeholder="Nome do policial" required maxlength="40" style="flex:2;">
 <button type="submit"><i class="fa-solid fa-plus"></i> ADICIONAR</button>
 </div>
 </form>
 
-<form id="promoverForm">
+<form id="promoverForm" autocomplete="off">
 <div class="admin-form-row">
-<select id="militarSelect"></select>
-<select id="novoCargoSelect"></select>
+<select id="militarSelect" style="flex:2;"></select>
+<select id="novoCargoSelect" style="flex:1;"></select>
 <button type="submit"><i class="fa-solid fa-arrow-up"></i> PROMOVER</button>
 </div>
 </form>
 
-<form id="removerForm">
+<form id="removerForm" autocomplete="off">
 <div class="admin-form-row">
-<input type="text" id="removerInput" placeholder="Digite o nome para remover">
+<input type="text" id="removerInput" placeholder="Digite o nome para remover" style="flex:2;">
 <button type="submit" style="background:linear-gradient(135deg, #E74C3C 0%, #C0392B 100%);"><i class="fa-solid fa-user-minus"></i> REMOVER</button>
 </div>
-<ul id="removerSugestoes" style="list-style:none;padding:0;"></ul>
+<ul id="removerSugestoes"></ul>
 </form>
 
 <hr class="separator">
 
-<div>
+<div style="margin-bottom:15px;">
     <button onclick='exportarBackup()'><i class='fa fa-download'></i> EXPORTAR</button>
     <label for='importBackupInput' style='display:inline-block;margin:0 5px;'>
-        <span style='cursor:pointer;background:rgba(255,215,0,0.2);padding:12px 25px;border-radius:50px;color:#FFD700;font-weight:bold;border:2px solid #FFD700;display:inline-block;'>
+        <span style='cursor:pointer;background:rgba(255,215,0,0.2);padding:12px 20px;border-radius:50px;color:#FFD700;font-weight:bold;border:2px solid #FFD700;display:inline-block;'>
             <i class='fa fa-upload'></i> IMPORTAR
         </span>
         <input type='file' accept='.json' id='importBackupInput' style='display:none'>
@@ -533,126 +571,54 @@ hr.separator {
 </div>
 
 <button onclick="logoutADM()" style="background:#000;color:#FFD700;border:2px solid #FFD700;margin-top:15px;"><i class="fa-solid fa-sign-out"></i> SAIR</button>
-<br><small style="color:rgba(255,215,0,0.6);margin-top:10px;display:block;">Salvamento automático ativado</small>
+<br><small style="color:rgba(255,215,0,0.6);margin-top:10px;display:block;">✅ Salvamento automático ativado</small>
 <div id="mensagem"></div>
 </div>
 </div>
 </div>
 
 <script>
+// HIERARQUIA COMPLETA DA POLÍCIA MILITAR
 const PATENTES = [
-    { nome:'Comandante', classe:'Comandante', icone:'fa-crown' },
-    { nome:'Sub-Comandante', classe:'SubComandante', icone:'fa-star' },
-    { nome:'Capitão', classe:'Capitao', icone:'fa-medal' },
-    { nome:'Tenente', classe:'Tenente', icone:'fa-user-tie' },
-    { nome:'Sargento', classe:'Sargento', icone:'fa-user-shield' },
-    { nome:'Soldado', classe:'Soldado', icone:'fa-user' },
-    { nome:'Recruta', classe:'Recruta', icone:'fa-user-graduate' },
+    { nome:'Coronel', classe:'Coronel', icone:'fa-crown', categoria:'superior' },
+    { nome:'Tenente-Coronel', classe:'TenenteCoronel', icone:'fa-star', categoria:'superior' },
+    { nome:'Major', classe:'Major', icone:'fa-medal', categoria:'superior' },
+    { nome:'Capitão', classe:'Capitao', icone:'fa-shield', categoria:'intermediario' },
+    { nome:'1º Tenente', classe:'PrimeiroTenente', icone:'fa-user-tie', categoria:'intermediario' },
+    { nome:'2º Tenente', classe:'SegundoTenente', icone:'fa-user-tie', categoria:'intermediario' },
+    { nome:'Aspirante', classe:'Aspirante', icone:'fa-graduation-cap', categoria:'intermediario' },
+    { nome:'Subtenente', classe:'Subtenente', icone:'fa-user-shield', categoria:'praca' },
+    { nome:'1º Sargento', classe:'PrimeiroSargento', icone:'fa-user-shield', categoria:'praca' },
+    { nome:'2º Sargento', classe:'SegundoSargento', icone:'fa-user-shield', categoria:'praca' },
+    { nome:'3º Sargento', classe:'TerceiroSargento', icone:'fa-user-shield', categoria:'praca' },
+    { nome:'Cabo', classe:'Cabo', icone:'fa-user', categoria:'praca' },
+    { nome:'Soldado', classe:'Soldado', icone:'fa-user', categoria:'praca' },
 ];
 
 const DADOS_PADRAO = {
-    'Comandante':['Comandante Supremo GATE'],
-    'Sub-Comandante':['Sub-Comandante Silva'],
-    'Capitão':['Capitão Souza'],
-    'Tenente':['Tenente Lima','Tenente Costa'],
-    'Sargento':['Sargento Dias'],
-    'Soldado':['Soldado Alves','Soldado Nunes'],
-    'Recruta':['Recruta Júnior']
+    'Coronel': [],
+    'Tenente-Coronel': [],
+    'Major': [],
+    'Capitão': [],
+    '1º Tenente': [],
+    '2º Tenente': [],
+    'Aspirante': [],
+    'Subtenente': [],
+    '1º Sargento': [],
+    '2º Sargento': [],
+    '3º Sargento': [],
+    'Cabo': [],
+    'Soldado': []
 };
 
+const SENHA_ADM = "GATE2026";
+
 function salvarDados(dados){ localStorage.setItem('hierarquiaGATE',JSON.stringify(dados)); }
-function carregarDados(){ let d=localStorage.getItem('hierarquiaGATE'); return d?JSON.parse(d):JSON.parse(JSON.stringify(DADOS_PADRAO)); }
+function carregarDados(){ 
+    let d=localStorage.getItem('hierarquiaGATE'); 
+    return d ? JSON.parse(d) : JSON.parse(JSON.stringify(DADOS_PADRAO)); 
+}
 
 function renderizar(filtroBusca){
     const dados = carregarDados();
     const container = document.getElementById('hierarquia');
-    container.innerHTML='';
-    let total=0, patentesAtivas=0;
-    
-    PATENTES.forEach(pat=>{
-        let lista = dados[pat.nome] || [];
-        let listaFiltrada = filtroBusca ? lista.filter(n=> n.toLowerCase().includes(filtroBusca.toLowerCase())) : lista;
-        if(filtroBusca && !pat.nome.toLowerCase().includes(filtroBusca.toLowerCase()) && listaFiltrada.length===0) return;
-        
-        if(lista.length > 0) patentesAtivas++;
-        
-        let html=`<div class="categoria ${pat.classe} fade-in">
-        <h2><i class="fa-solid ${pat.icone}"></i> ${pat.nome} 
-        <span class="rank-badge"><i class='fa fa-users'></i> ${lista.length}</span></h2>
-        <ul class="militar-list">`;
-        
-        if(listaFiltrada.length===0){
-            html+=`<li style="opacity:.5;font-style:italic;">Nenhum operador</li>`;
-        } else {
-            listaFiltrada.forEach(nome=>{
-                html+=`<li class="militar"><span>${nome}</span></li>`;
-                total++;
-            });
-        }
-        html+=`</ul></div>`;
-        container.innerHTML+=html;
-    });
-    
-    document.getElementById('totalOperadores').textContent = total;
-    document.getElementById('totalPatentes').textContent = patentesAtivas;
-    atualizarSelects();
-}
-
-renderizar();
-
-const buscaInput = document.getElementById('buscaGlobal');
-const limparBtn = document.getElementById('limparBuscaBtn');
-
-buscaInput.addEventListener('input',()=>{
-    renderizar(buscaInput.value);
-    limparBtn.style.display = buscaInput.value ? 'inline-block':'none';
-});
-
-limparBtn.onclick = ()=>{
-    buscaInput.value='';
-    renderizar();
-    limparBtn.style.display='none';
-};
-
-document.getElementById('addForm').onsubmit=function(e){
-    e.preventDefault();
-    if(!isADM()) return alert("Acesso negado!");
-    let cargo=document.getElementById('cargoSelect').value;
-    let nome=document.getElementById('nomeInput').value.trim();
-    if(!nome) return alert('Digite o nome!');
-    let dados=carregarDados();
-    if(!dados[cargo]) dados[cargo]=[];
-    if(dados[cargo].includes(nome)) return alert('Já existe!');
-    dados[cargo].push(nome);
-    salvarDados(dados);
-    document.getElementById('nomeInput').value='';
-    renderizar(buscaInput.value);
-    destacarMilitar(cargo,nome);
-    mostrarMensagem(`✅ ${nome} adicionado!`);
-}
-
-document.getElementById('promoverForm').onsubmit=function(e){
-    e.preventDefault();
-    if(!isADM()) return alert("Acesso negado!");
-    let [cargoAtual,nome]=document.getElementById('militarSelect').value.split('|');
-    let novoCargo=document.getElementById('novoCargoSelect').value;
-    if(cargoAtual===novoCargo) return alert('Selecione cargo diferente!');
-    let dados=carregarDados();
-    dados[cargoAtual]=dados[cargoAtual].filter(n=>n!==nome);
-    if(!dados[novoCargo]) dados[novoCargo]=[];
-    dados[novoCargo].push(nome);
-    salvarDados(dados);
-    renderizar(buscaInput.value);
-    destacarMilitar(novoCargo,nome);
-    mostrarMensagem(`✅ ${nome} promovido!`);
-}
-
-const inputRemover=document.getElementById('removerInput');
-const sugestoes=document.getElementById('removerSugestoes');
-
-inputRemover.addEventListener('input',()=>{
-    const busca=inputRemover.value.toLowerCase();
-    const dados=carregarDados();
-    let resultados=[];
-    PATENTES.forEach(pat=>(dados[pat.nome]||[]).forEach(n=>{
-        if(n.toLowerCase().includes(
